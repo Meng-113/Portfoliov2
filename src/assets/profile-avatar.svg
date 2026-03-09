@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" role="img" aria-labelledby="title desc">
+  <title id="title">Profile avatar</title>
+  <desc id="desc">Illustrated placeholder avatar with the initials CM.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0891b2" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+  </defs>
+  <rect width="480" height="480" rx="240" fill="url(#bg)" />
+  <circle cx="240" cy="182" r="94" fill="#e0f2fe" />
+  <path d="M118 388c28-62 75-96 122-96s94 34 122 96" fill="#e0f2fe" />
+  <text
+    x="240"
+    y="444"
+    fill="#ffffff"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="56"
+    font-weight="700"
+    text-anchor="middle"
+  >
+    CM
+  </text>
+</svg>
