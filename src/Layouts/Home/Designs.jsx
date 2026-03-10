@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import SectionTitle from '../../components/SectionTitle';
 import RevealInView from '../../components/RevealInView';
@@ -221,9 +221,11 @@ const ImageCard = ({
   className = '',
   titleClassName = 'packaging-round',
   compact = false,
+  onPreview,
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const frameClass = imageShapeByFrame[design?.frame] || 'aspect-[4/3]';
+  const canPreview = typeof onPreview === 'function';
 
   if (!design?.image) {
     return (
@@ -306,11 +308,26 @@ const ImageCard = ({
         className={`relative ${frameClass} overflow-hidden rounded-[1.6rem] border p-2 ${mediaFrameClass} ${mediaSurfaceClass}`}
       >
         <div className="absolute inset-x-6 top-0 h-14 rounded-b-full bg-white/70 blur-2xl" />
-        <img
-          src={design.image}
-          alt={design.title}
-          className="relative z-10 h-full w-full rounded-[1.1rem] border border-white/45 object-cover"
-        />
+        {canPreview ? (
+          <button
+            type="button"
+            onClick={() => onPreview(design)}
+            className="relative z-10 block h-full w-full cursor-zoom-in rounded-[1.1rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2"
+            aria-label={`Open full screen preview for ${design.title}`}
+          >
+            <img
+              src={design.image}
+              alt={design.title}
+              className="h-full w-full rounded-[1.1rem] border border-white/45 object-cover transition duration-300 ease-out hover:scale-[1.02]"
+            />
+          </button>
+        ) : (
+          <img
+            src={design.image}
+            alt={design.title}
+            className="relative z-10 h-full w-full rounded-[1.1rem] border border-white/45 object-cover"
+          />
+        )}
       </div>
 
       <div className="relative z-10 mt-6">
@@ -357,6 +374,68 @@ const ImageCard = ({
         ) : null}
       </div>
     </motion.article>
+  );
+};
+
+const PosterLightbox = ({ design, onClose }) => {
+  useEffect(() => {
+    if (!design) {
+      return undefined;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [design, onClose]);
+
+  if (!design?.image) {
+    return null;
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/88 px-4 py-6 sm:px-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${design.title} image preview`}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-6xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-1 top-1 z-20 rounded-full border border-white/35 bg-black/45 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+          aria-label="Close image preview"
+        >
+          Close
+        </button>
+
+        <div className="overflow-hidden rounded-2xl border border-white/20 bg-black/45 p-2 sm:p-3">
+          <img
+            src={design.image}
+            alt={design.title}
+            className="max-h-[82vh] w-full rounded-xl object-contain"
+          />
+        </div>
+        <p className="mt-3 text-center text-sm font-semibold uppercase tracking-[0.18em] text-white/90">
+          {design.title}
+        </p>
+      </div>
+    </div>
   );
 };
 
@@ -1060,6 +1139,15 @@ const Designs = ({
   const musicSupport = musicItems.filter(
     (design) => design.id !== musicFeatured?.id,
   );
+  const [activePoster, setActivePoster] = useState(null);
+
+  const openPosterPreview = (design) => {
+    setActivePoster(design);
+  };
+
+  const closePosterPreview = () => {
+    setActivePoster(null);
+  };
 
   return (
     <section id="design" className="mx-auto mt-28 w-[84%] text-left">
@@ -1186,6 +1274,7 @@ const Designs = ({
                         design={design}
                         tilt={index % 2 === 0 ? -1.2 : 1.2}
                         compact
+                        onPreview={openPosterPreview}
                       />
                     </RevealInView>
                   ))}
@@ -1242,6 +1331,7 @@ const Designs = ({
                         tilt={index % 2 === 0 ? -1.2 : 1.2}
                         className="shadow-[0_30px_80px_rgba(5,2,12,0.35)]"
                         compact
+                        onPreview={openPosterPreview}
                       />
                     </RevealInView>
                   ))}
@@ -1376,6 +1466,7 @@ const Designs = ({
                           tilt={index % 2 === 0 ? -1.1 : 1.1}
                           titleClassName="skincare-editorial"
                           compact
+                          onPreview={openPosterPreview}
                         />
                       </RevealInView>
                     ))}
@@ -1643,6 +1734,7 @@ const Designs = ({
                           tone="retro"
                           tilt={index % 2 === 0 ? -1 : 1}
                           compact
+                          onPreview={openPosterPreview}
                         />
                       </RevealInView>
                     ))}
@@ -1652,6 +1744,10 @@ const Designs = ({
             </div>
           </div>
         </div>
+      ) : null}
+
+      {activePoster ? (
+        <PosterLightbox design={activePoster} onClose={closePosterPreview} />
       ) : null}
     </section>
   );
