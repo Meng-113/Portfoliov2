@@ -376,13 +376,13 @@ const NutritionBadges = ({ items = [] }) => {
   }
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-2 sm:gap-3">
       {items.map((item) => (
         <div
           key={item}
-          className="packaging-badge flex h-20 w-20 items-center justify-center rounded-full border border-white/70 bg-[#fff8f1]/82 px-3 text-center shadow-[0_18px_34px_rgba(77,41,27,0.16)]"
+          className="packaging-badge flex h-14 w-14 items-center justify-center rounded-full border border-white/70 bg-[#fff8f1]/82 px-2 text-center shadow-[0_14px_26px_rgba(77,41,27,0.14)] sm:h-16 sm:w-16 sm:px-3 md:h-20 md:w-20"
         >
-          <span className="packaging-round text-sm font-extrabold leading-4 text-[#4d291b]">
+          <span className="packaging-round text-[11px] font-extrabold leading-3 text-[#4d291b] sm:text-xs sm:leading-4 md:text-sm">
             {item}
           </span>
         </div>
@@ -468,7 +468,7 @@ const PackagingHeroStage = ({
         </h4>
       </div>
 
-      <div className="absolute left-6 top-72 z-10 max-w-[15rem] sm:left-8 sm:top-72">
+      <div className="absolute left-4 top-48 z-10 max-w-[11rem] sm:left-6 sm:top-56 sm:max-w-[13rem] md:left-8 md:top-64 md:max-w-[15rem]">
         <NutritionBadges items={badges} />
       </div>
     </div>
@@ -606,8 +606,8 @@ const CurrencyNoteStage = ({ frontDesign, backDesign }) => {
       {availableSides.map((item) => {
         const isActive = item.key === activeNote?.key;
         const wrapperClass = isActive
-          ? 'absolute bottom-[2%] left-[2%] z-20 w-[92%] sm:bottom-[4%] sm:left-[7%] sm:w-[84%]'
-          : 'absolute right-[2%] top-[9%] z-10 w-[88%] sm:right-[9%] sm:top-[12%] sm:w-[80%]';
+          ? 'absolute bottom-[10%] left-[3%] z-20 w-[92%] sm:bottom-[6%] sm:left-[7%] sm:w-[84%]'
+          : 'absolute right-[3%] top-[18%] z-10 w-[88%] sm:right-[9%] sm:top-[12%] sm:w-[80%]';
         const animation = shouldReduceMotion
           ? undefined
           : isActive

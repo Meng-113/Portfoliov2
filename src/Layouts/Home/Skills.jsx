@@ -7,6 +7,8 @@ import {
 const Skills = ({ skillImages = [], skillGroups = [] }) => {
   const images = Array.isArray(skillImages) ? skillImages.filter(Boolean) : [];
   const groups = Array.isArray(skillGroups) ? skillGroups : [];
+  const logoClassName =
+    'mx-10 inline-block h-12 w-auto object-contain opacity-95 sm:mx-6 sm:h-14 md:mx-32 md:h-20';
 
   if (images.length === 0) {
     return (
@@ -60,7 +62,7 @@ const Skills = ({ skillImages = [], skillGroups = [] }) => {
                   height={160}
                   loading="lazy"
                   decoding="async"
-                  className="mx-4 inline-block h-20 w-30 opacity-95"
+                  className={logoClassName}
                 />
               ))}
             </ScrollVelocityRow>
@@ -75,7 +77,7 @@ const Skills = ({ skillImages = [], skillGroups = [] }) => {
                   height={160}
                   loading="lazy"
                   decoding="async"
-                  className="mx-4 inline-block h-20 w-30 opacity-95"
+                  className={logoClassName}
                 />
               ))}
             </ScrollVelocityRow>
