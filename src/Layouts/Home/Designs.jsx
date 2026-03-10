@@ -466,7 +466,7 @@ const PackagingHeroStage = ({
 };
 
 const WrapperSystemStage = ({ frontDesign, backDesign }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = false;
   const hasFront = Boolean(frontDesign?.image);
   const hasBack = Boolean(backDesign?.image);
 
@@ -536,7 +536,7 @@ const WrapperSystemStage = ({ frontDesign, backDesign }) => {
 };
 
 const CurrencyNoteStage = ({ frontDesign, backDesign }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = false;
   const availableSides = [
     frontDesign?.image
       ? {
@@ -880,7 +880,7 @@ const SkincareHeroStage = ({
 };
 
 const SkincareIdentityStage = ({ identityDesigns = [] }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = false;
   const [frontCard, backCard] = identityDesigns;
   const defaultActiveCard = frontCard?.image
     ? 'front'
