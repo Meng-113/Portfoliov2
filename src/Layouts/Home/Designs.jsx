@@ -194,32 +194,22 @@ const ProductAsset = ({
   duration = 6.4,
   delay = 0,
 }) => {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <motion.img
       src={src}
       alt={alt}
       className={className}
-      animate={
-        shouldReduceMotion
-          ? undefined
-          : {
-              y: [0, -floatY, 0],
-              x: [0, floatX, 0],
-              rotate: [rotate, rotate + 1.8, rotate],
-            }
-      }
-      transition={
-        shouldReduceMotion
-          ? undefined
-          : {
-              duration,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay,
-            }
-      }
+      animate={{
+        y: [0, -floatY, 0],
+        x: [0, floatX, 0],
+        rotate: [rotate, rotate + 1.8, rotate],
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        ease: 'easeInOut',
+        delay,
+      }}
     />
   );
 };
