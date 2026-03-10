@@ -557,12 +557,12 @@ const portfolioData = {
     {
       id: 2,
       name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/meng-113',
+      url: 'https://www.linkedin.com/in/chea-kimeng-4a1a74398/',
     },
     {
       id: 3,
       name: 'Facebook',
-      url: '',
+      url: 'https://www.facebook.com/chea.kimeng.31',
     },
   ],
 };
